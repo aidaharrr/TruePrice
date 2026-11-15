@@ -1,0 +1,44 @@
+[
+  {
+    "id": "galaxy-projector-3in1",
+    "expect": "dropship",
+    "url": "https://www.amazon.com/dp/B0HDS3BFQ1",
+    "note": "Unbranded 3-in-1 galaxy projector"
+  },
+  {
+    "id": "galaxy-projector-car",
+    "expect": "dropship",
+    "url": "https://www.amazon.com/dp/B0H6HWH88H",
+    "note": "Unbranded USB galaxy projector for bedroom & car"
+  },
+  {
+    "id": "posture-corrector",
+    "expect": "dropship",
+    "url": "https://www.amazon.com/dp/B0H85QXZFT",
+    "note": "Alsoay posture corrector (\"NEW 2026\" title)"
+  },
+  {
+    "id": "canvas-blue-forest",
+    "expect": "ai-image",
+    "url": "https://www.amazon.com/dp/B0GQDZ2R8C",
+    "note": "\"Generic\" glowing-forest canvas print"
+  },
+  {
+    "id": "canvas-bioluminescent",
+    "expect": "ai-image",
+    "url": "https://www.amazon.com/dp/B0D2PWQFNH",
+    "note": "Bioluminescent fantasy forest canvas"
+  },
+  {
+    "id": "canvas-fantasy-desert",
+    "expect": "ai-image",
+    "url": "https://www.amazon.com/dp/B0H8CTHNYJ",
+    "note": "Fantasy desert / floating islands canvas"
+  },
+  {
+    "id": "beats-solo-4",
+    "expect": "legit",
+    "url": "https://www.amazon.com/dp/B0CZPHPJLN",
+    "note": "Control: genuine branded product (demo default)"
+  }
+]
