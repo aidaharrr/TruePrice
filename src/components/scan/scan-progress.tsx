@@ -18,7 +18,6 @@ export function ScanProgress({
   stepIndex,
   asin,
   product,
-  isDemo,
   onCancel,
 }: {
   /** Index into SCAN_STEPS of the step currently running. */
@@ -26,7 +25,6 @@ export function ScanProgress({
   asin: string | null;
   /** Filled in as soon as /api/scrape returns, while the slower checks run. */
   product: ScrapedProduct | null;
-  isDemo: boolean;
   onCancel: () => void;
 }) {
   const total = SCAN_STEPS.length;
@@ -46,7 +44,6 @@ export function ScanProgress({
             <Badge variant="secondary" className="font-mono">
               {asin ?? "a.co link"}
             </Badge>
-            {isDemo && <Badge variant="outline">Demo product</Badge>}
           </div>
           <Button variant="ghost" size="sm" onClick={onCancel} className="gap-1 text-muted-foreground">
             <X className="size-3.5" /> Cancel

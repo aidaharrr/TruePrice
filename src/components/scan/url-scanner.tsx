@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { AlertCircle, ArrowRight, Infinity as InfinityIcon, Link2, PlayCircle, ScanSearch } from "lucide-react";
+import { AlertCircle, Infinity as InfinityIcon, Link2, ScanSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { DEMO_PRODUCT_URL, validateAmazonUrl } from "@/lib/amazon";
+import { validateAmazonUrl } from "@/lib/amazon";
 import { runScan, ScanError, type ScanReport } from "@/lib/scan/run-scan";
 import type { ScrapedProduct } from "@/lib/scrape/extract";
 import { FREE_SCAN_LIMIT, type AccountStatus } from "@/lib/account/limits";
@@ -30,14 +30,13 @@ export function UrlScanner() {
   const [target, setTarget] = useState<{ asin: string | null; url: string } | null>(null);
   const [product, setProduct] = useState<ScrapedProduct | null>(null);
   const [report, setReport] = useState<ScanReport | null>(null);
-  const [isDemo, setIsDemo] = useState(false);
 
   const account = useAccount();
   const { openPaywall } = usePaywall();
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
-  async function startScan(rawUrl: string, opts: { demo?: boolean } = {}) {
+  async function startScan(rawUrl: string) {
     const check = validateAmazonUrl(rawUrl);
     if (!check.ok) {
       setError(check.error);
@@ -59,7 +58,6 @@ export function UrlScanner() {
     }
 
     setError(null);
-    setIsDemo(!!opts.demo);
     setTarget(check);
     setProduct(null);
     setReport(null);
@@ -110,24 +108,13 @@ export function UrlScanner() {
     requestAnimationFrame(() => inputRef.current?.focus());
   }
 
-  function runDemo() {
-    setUrl(DEMO_PRODUCT_URL);
-    void startScan(DEMO_PRODUCT_URL, { demo: true });
-  }
-
   return (
     <div ref={rootRef} className="scroll-mt-24">
       {phase === "scanning" && target && (
-        <ScanProgress
-          stepIndex={stepIndex}
-          asin={target.asin}
-          product={product}
-          isDemo={isDemo}
-          onCancel={cancelScan}
-        />
+        <ScanProgress stepIndex={stepIndex} asin={target.asin} product={product} onCancel={cancelScan} />
       )}
 
-      {phase === "done" && report && <ScanResultCard report={report} isDemo={isDemo} onScanAnother={scanAnother} />}
+      {phase === "done" && report && <ScanResultCard report={report} onScanAnother={scanAnother} />}
 
       {phase === "idle" && (
         <div className="space-y-4">
@@ -184,22 +171,7 @@ export function UrlScanner() {
             )}
           </div>
 
-          <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              onClick={runDemo}
-              className="group h-11 w-full gap-2 rounded-full border-primary/30 bg-primary/5 px-5 text-primary hover:bg-primary/10 hover:text-primary sm:w-auto"
-            >
-              <PlayCircle className="size-5" />
-              Try instant demo
-              <span className="rounded-full bg-primary px-2 py-0.5 text-[0.7rem] font-semibold tracking-wide text-primary-foreground uppercase">
-                No sign-up
-              </span>
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-            </Button>
-
+          <div className="flex justify-center">
             <TrialMeter status={account.status} onUpgrade={() => openPaywall("limit")} />
           </div>
         </div>

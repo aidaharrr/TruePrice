@@ -5,8 +5,9 @@ import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL, isSupabaseConfigured } from "@/
 /**
  * Refreshes the Supabase session cookie on each request so access tokens don't expire mid-visit.
  * Authorization itself happens in the API routes (getRequestUser), not here.
+ * (Next.js 16 renamed the `middleware` file convention to `proxy`.)
  */
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   if (!isSupabaseConfigured) return NextResponse.next({ request });
 
   let response = NextResponse.next({ request });

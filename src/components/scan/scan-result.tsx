@@ -14,7 +14,6 @@ import {
   TrendingUp,
   type LucideIcon,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -50,11 +49,9 @@ const TONE_TEXT: Record<Tone, string> = {
 
 export function ScanResultCard({
   report,
-  isDemo,
   onScanAnother,
 }: {
   report: ScanReport;
-  isDemo: boolean;
   onScanAnother: () => void;
 }) {
   const { product, productUrl, markup, analysis } = report;
@@ -66,11 +63,6 @@ export function ScanResultCard({
       <div className={cn("flex items-center gap-3 border-b px-5 py-3.5 text-sm", TONE_BANNER[tone])} role="status">
         <VerdictIcon className="size-5 shrink-0" />
         <p className="flex-1 font-medium">{verdict.headline}</p>
-        {isDemo && (
-          <Badge variant="outline" className="bg-background">
-            Demo product
-          </Badge>
-        )}
       </div>
 
       <CardHeader className="pt-5">

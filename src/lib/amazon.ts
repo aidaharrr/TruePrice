@@ -10,13 +10,6 @@
  *    They carry no ASIN, so the raw link is returned and the backend follows the redirect.
  */
 
-/**
- * Real product the "Try instant demo" button scans (Beats Solo 4, Slate Blue). It runs the full live
- * pipeline like any other link. Override with NEXT_PUBLIC_DEMO_PRODUCT_URL (any amazon.com product URL).
- */
-export const DEMO_PRODUCT_URL =
-  process.env.NEXT_PUBLIC_DEMO_PRODUCT_URL || "https://www.amazon.com/dp/B0CZPHPJLN";
-
 const SHORT_LINK_HOST = "a.co";
 const AMAZON_HOST_RE = /^(?:www\.|smile\.|m\.)?amazon\.com$/i;
 // Other regional stores (amazon.co.uk, amazon.de, amazon.com.au…) get a friendlier message.

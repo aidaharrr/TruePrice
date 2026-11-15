@@ -53,7 +53,7 @@ npm run seed:judge
 | `supabase/migrations/0001_profiles.sql` | `profiles` table, tier enum, RLS, sign-up trigger, `consume_scan()` |
 | `src/lib/supabase/*` | Browser, server (cookie/bearer) and service-role clients |
 | `src/lib/account/*` | Tiers & limit, `requireUser()` guard, profile read + atomic scan counting |
-| `src/middleware.ts` | Refreshes the Supabase session cookie |
+| `src/proxy.ts` | Next.js 16 proxy (formerly middleware): refreshes the Supabase session cookie |
 | `src/components/account/*` | Account context (guest sessions, status) and the sign-in / sign-up dialog |
 | `scripts/seed-judge.mjs` | Creates/resets the judge account with the `JUDGE` tier |
 
@@ -76,7 +76,7 @@ npm run dev
 | --- | --- |
 | `src/app/layout.tsx` | Root layout: font, header, footer, `PaywallProvider` |
 | `src/app/page.tsx` | Landing page (hero + scanner, "What we check", "How it works") |
-| `src/components/scan/url-scanner.tsx` | URL input, validation errors, demo mode, trial gating, runs the scan |
+| `src/components/scan/url-scanner.tsx` | URL input, validation errors, scan-limit gating, runs the scan |
 | `src/components/scan/scan-progress.tsx` | Live 3-step progress; shows the product as soon as it's scraped |
 | `src/components/scan/scan-result.tsx` | Report: verdict, markup, AI-photo and title scores, AI summary |
 | `src/lib/scan/run-scan.ts` | Client orchestrator: scrape → markup → analyze, typed per-section results |
@@ -288,8 +288,8 @@ in secondary lifestyle images), and Alibaba prices are often wholesale/MOQ price
 
 ## Demo tips
 
-- **Try instant demo** fills a real product link (Beats Solo 4, `B0CZPHPJLN`) and runs the same live scan as any
-  other link (it counts as a scan). Point it at another product with `NEXT_PUBLIC_DEMO_PRODUCT_URL`.
+- Products that make good live demos are in `scripts/live-products.json` (e.g. the 3-in-1 galaxy projector,
+  `https://www.amazon.com/dp/B0HDS3BFQ1`, shows a +114% Alibaba markup).
 - Judges: sign in as `judge@trueprice.app` / `hackathon2026` for unlimited scans.
 - A free scan is only used once the listing has actually been read, so failed scans don't count.
 - After 3 scans a guest gets 403 from the server and the paywall opens ("Sign up and upgrade to continue").
